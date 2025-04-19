@@ -1,0 +1,18 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+	<title>Fab3 Logo</title>
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-563.2,563.2,0,256,537.6)">
+			<stop offset="0" stop-color="#de9618"/>
+			<stop offset="1" stop-color="#ffb22c"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: #ffffff } 
+	</style>
+	<g id="Folder 1">
+		<path id="Shape 1" fill-rule="evenodd" class="s0" d="m30 0h452c16.6 0 30 13.4 30 30v452c0 16.6-13.4 30-30 30h-452c-16.6 0-30-13.4-30-30v-452c0-16.6 13.4-30 30-30z"/>
+		<path id="F" class="s1" aria-label="F"  d="m144.8 423h75.1l18.7-105.3h78.9l9.9-56.8h-78.9l8.4-47.3h107.5l10.3-59.5h-182.3z"/>
+		<path id="Shape 2" fill-rule="evenodd" class="s1" d="m159.2 135.6c-12.8 0-23.2-10.4-23.2-23.2 0-12.8 10.4-23.2 23.2-23.2 12.8 0 23.1 10.4 23.1 23.2 0 12.8-10.3 23.2-23.1 23.2z"/>
+	</g>
+</svg>
