@@ -5,8 +5,6 @@ import React from "react";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
-import AirdropCard from "@/components/AirdropCard";
-import AirdropGroup from "@/components/AirdropGroup";
 
 export default function Page() {
   return (
@@ -19,7 +17,10 @@ export default function Page() {
           </Heading1>
         </div>
 
-        <div className="flex items-center my-6 space-x-4 p-4 w-[265px] bg-secondary-1 leading-4 rounded-md dark:bg-black">
+        <Link
+          href="#"
+          className="flex items-center my-6 space-x-4 p-4 w-[265px] bg-secondary-1 leading-4 rounded-lg dark:bg-black"
+        >
           <div>
             <Image
               src="/profile.png"
@@ -29,54 +30,13 @@ export default function Page() {
               className="rounded-full"
             />
           </div>
-          <Link href="#">
-            {/* <h1>Emmanuel Abel</h1> */}
-            <Heading1 className="text-md">Emmanuel Abel</Heading1>
-            <Paragraph className="text-secondary-2 text-sm">
-              @abellmanuell
-            </Paragraph>
-          </Link>
-        </div>
+          {/* <h1>Emmanuel Abel</h1> */}
+          <Heading1 className="text-md">Emmanuel Abel</Heading1>
+          <Paragraph className="text-secondary-2 text-sm">
+            @abellmanuell
+          </Paragraph>
+        </Link>
       </header>
-
-      {/* Add Airdrop Button */}
-      <div className="flex justify-center">
-        <button className="flex py-4 px-6 rounded-full space-x-2 bg-primary-2 text-primary-1 dark:bg-primary-1 dark:text-black">
-          <Plus />
-          <span className="font-bold">Add Airdrop</span>
-        </button>
-      </div>
-
-      <div className="mt-6 mb-4 flex justify-between">
-        <p className="text-sm">All airdrops</p>
-        <div>
-          <Search size={20} />
-        </div>
-      </div>
-
-      {/* Airdrops*/}
-      <AirdropGroup>
-        <AirdropCard
-          title="earn.taker.xyx"
-          href="#"
-          img_src="/taker.png"
-          date="Apr 19, 2025"
-        />
-
-        <AirdropCard
-          title="soccersm.ai"
-          href="#"
-          img_src="/soccersm.ai.png"
-          date="Dec 31, 2025"
-        />
-
-        <AirdropCard
-          title="earn.guild.xzy"
-          href="#"
-          img_src="/earn.guild.xzy.png"
-          date="Jul 31, 2025"
-        />
-      </AirdropGroup>
     </Wrapper>
   );
 }

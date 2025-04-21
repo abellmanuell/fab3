@@ -17,11 +17,11 @@ export default function AirdropCard({
   return (
     <div
       className={cn(
-        "flex h-[70px] rounded-md overflow-hidden bg-secondary-1 dark:bg-black",
+        "flex rounded-lg overflow-hidden bg-secondary-1 dark:bg-black",
         className
       )}
     >
-      <Link href={href} className="flex items-center space-x-2 grow p-6">
+      <Link href={href} className="flex items-center space-x-2 grow p-4">
         <div>
           <Image src={img_src} height="40" width="40" alt={title} />
         </div>
