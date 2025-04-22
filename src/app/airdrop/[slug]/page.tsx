@@ -47,6 +47,7 @@ export default function SingleAirdrop() {
           </Paragraph>
         </div>
       </div>
+
       {/* Task status */}
       <div className="my-4 flex justify-center">
         {!false ? (

@@ -1,4 +1,4 @@
-import { Plus, Search, Trash } from "lucide-react";
+import { Crown, Plus, Search, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,35 +8,47 @@ import Paragraph from "@/components/Paragraph";
 
 export default function Page() {
   return (
-    <Wrapper>
-      <header className="flex flex-col justify-center items-center">
-        <div>
-          <Image src="/logo.svg" height="98" width="98" alt="Fab3 Logo" />
-          <Heading1 className="font-black italic text-4xl text-center">
-            Fab3
-          </Heading1>
-        </div>
+    <Wrapper className="py-0 h-screen flex flex-col justify-center relative">
+      <div className="p-6 flex">
+        <Paragraph className="rounded-full py-2 px-4 font-bold text-center text-xs inline-flex space-x-1 justify-center text-primary-1 bg-primary-2 m-auto dark:bg-primary-2/20">
+          <Crown size={15} />
+          <span>Never miss a claim again.</span>
+        </Paragraph>
+      </div>
+
+      <section className="">
+        <Heading1 className="font-black text-5xl text-center">
+          Track Airdrops. <br /> Stay{" "}
+          <i className="text-primary-1">Eligible.</i>
+        </Heading1>
+
+        <Paragraph className="text-sm text-center text-secondary-2 my-6">
+          Web3 moves fast. Fab3 helps you keep up with airdrop tasks, reminders,
+          and color-coded progress so you never miss the bag.
+        </Paragraph>
 
         <Link
-          href="#"
-          className="flex items-center my-6 space-x-4 p-4 w-[265px] bg-secondary-1 leading-4 rounded-lg dark:bg-black"
+          href="/login"
+          className="flex bg-primary-1 font-bold justify-center rounded-full w-full p-4 dark:text-black"
         >
-          <div>
-            <Image
-              src="/profile.png"
-              height="40"
-              width="40"
-              alt="Fab3 Logo"
-              className="rounded-full"
-            />
-          </div>
-          {/* <h1>Emmanuel Abel</h1> */}
-          <Heading1 className="text-md">Emmanuel Abel</Heading1>
-          <Paragraph className="text-secondary-2 text-sm">
-            @abellmanuell
-          </Paragraph>
+          Farm Smarter Today
         </Link>
-      </header>
+      </section>
+
+      <div>
+        <Paragraph className="p-4 text-center text-xs flex space-x-1 justify-center">
+          <span>❤️</span>
+          <Image src="/logo.svg" height="15" width="15" alt="Fab3 Logo" />
+          <span>Built with love by</span>
+          <Link
+            target="_blank"
+            className="text-primary-1 underline"
+            href="https://x.com/abellmanuell"
+          >
+            Abel Emmanuel
+          </Link>
+        </Paragraph>
+      </div>
     </Wrapper>
   );
 }
