@@ -11,7 +11,7 @@ export default function Wrapper({
   return (
     <main
       className={cn(
-        "px-10 md:px-4 py-10 sm:min-w-80 md:w-[30rem] lg:w-lg transition-all sm:m-auto",
+        "px-1 sm:px-4 py-10 sm:min-w-80 md:w-[30rem] lg:w-lg transition-all sm:m-auto",
         className
       )}
     >

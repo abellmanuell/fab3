@@ -1,16 +1,23 @@
-import { Plus, Search, Trash } from "lucide-react";
+"use client";
+
+import React, { useContext, useState } from "react";
+import { Plus, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
+import Modal from "@/components/Modal";
+import { ModalContext } from "@/contexts/modal-context";
 
 export default function Page() {
+  const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
+
   return (
     <Wrapper>
+      {/* <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} /> */}
       <header className="flex flex-col justify-center items-center">
         <div>
           <Image src="/logo.svg" height="98" width="98" alt="Fab3 Logo" />
@@ -44,13 +51,19 @@ export default function Page() {
 
       {/* Add Airdrop Button */}
       <div className="flex justify-center">
-        <button className="flex py-4 px-6 rounded-full space-x-2 bg-primary-2 text-primary-1 dark:bg-primary-1 dark:text-black">
+        <Link
+          href="/airdrops/add"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          className="flex py-4 px-6 rounded-full space-x-2 bg-primary-2 text-primary-1 dark:bg-primary-1 dark:text-black cursor-pointer"
+        >
           <Plus />
           <span className="font-bold">Add Airdrop</span>
-        </button>
+        </Link>
       </div>
 
-      <div className="mt-6 mb-4 flex justify-between">
+      <div className="px-4 mt-6 mb-4 flex justify-between">
         <p className="text-sm">All airdrops</p>
         <div>
           <Search size={20} />

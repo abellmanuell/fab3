@@ -4,7 +4,6 @@ import Input from "@/components/Input";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
 import { Calendar, Crown, Link } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 export default function AddAirdrop() {

@@ -7,7 +7,7 @@ export default function Button({ children, className }: ButtonProps) {
   return (
     <button
       className={cn(
-        "flex bg-primary-1 font-bold justify-center items-center group rounded-full w-full p-4 dark:text-black space-x-1",
+        "flex bg-primary-1 font-bold justify-center items-center group rounded-full w-full p-4 dark:text-black space-x-1 cursor-pointer",
         className
       )}
     >

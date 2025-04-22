@@ -10,7 +10,7 @@ export default function ButtonOutline({
   return (
     <button
       className={cn(
-        "flex space-x-4 border border-primary-1 items-center justify-center rounded-full w-full p-4 hover:bg-primary-2/20 dark:hover:bg-black/20",
+        "flex space-x-4 border border-primary-1 items-center justify-center rounded-full w-full p-4 hover:bg-primary-2/20 dark:hover:bg-black/20 cursor-pointer",
         className
       )}
     >
