@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
-import { Trash } from "lucide-react";
+import { ArrowUpRight, Dot, Eye, Pencil, Trash } from "lucide-react";
 import { AirdropProps } from "@/models/airdropModel";
 import { cn } from "@/utils/cn";
 
@@ -13,6 +13,7 @@ export default function AirdropCard({
   title,
   className,
   img_src,
+  status,
 }: AirdropProps) {
   return (
     <div
@@ -21,21 +22,32 @@ export default function AirdropCard({
         className
       )}
     >
-      <Link href={href} className="flex items-center space-x-2 grow p-4">
-        <div>
-          <Image src={img_src} height="40" width="40" alt={title} />
+      <Link href={href} className="flex items-center justify-between grow p-4">
+        <div className="flex items-center space-x-2">
+          <div>
+            <Image src={img_src} height="40" width="40" alt={title} />
+          </div>
+          <div>
+            <Heading1 className="font-medium text-md">{title}</Heading1>
+            <Paragraph className="text-xs text-secondary-2">{date}</Paragraph>
+          </div>
         </div>
-        <div>
-          <Heading1 className="font-medium text-md">{title}</Heading1>
-          <Paragraph className="text-xs text-secondary-2">{date}</Paragraph>
+
+        <div
+          className={cn(
+            "flex justify-center items-center",
+            !status ? "text-red-500" : "text-green-500"
+          )}
+        >
+          <Dot size={50} />
         </div>
       </Link>
 
       <Link
         href=""
-        className="bg-red-500 text-red-900 h-full px-6 py-2 flex justify-center items-center"
+        className="bg-primary-1 text-black h-full px-6 py-2 flex justify-center items-center"
       >
-        <Trash size={20} />
+        <Eye size={20} />
       </Link>
     </div>
   );

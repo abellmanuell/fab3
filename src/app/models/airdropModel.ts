@@ -4,4 +4,5 @@ export interface AirdropProps {
   title: string;
   className?: string;
   img_src: string;
+  status?: boolean;
 }

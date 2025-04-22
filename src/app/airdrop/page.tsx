@@ -64,6 +64,7 @@ export default function Page() {
           href="#"
           img_src="/taker.png"
           date="Apr 19, 2025"
+          status={true}
         />
 
         <AirdropCard
