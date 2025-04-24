@@ -9,7 +9,6 @@ import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
-import Modal from "@/components/Modal";
 import { ModalContext } from "@/contexts/modal-context";
 
 export default function Page() {
@@ -17,7 +16,6 @@ export default function Page() {
 
   return (
     <Wrapper>
-      {/* <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} /> */}
       <header className="flex flex-col justify-center items-center">
         <div>
           <Image src="/logo.svg" height="98" width="98" alt="Fab3 Logo" />

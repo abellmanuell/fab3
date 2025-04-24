@@ -1,16 +1,15 @@
-import Button from "@/components/Button";
 import ButtonOutline from "@/components/ButtonOutline";
+import SignUpForm from "@/components/forms/SignUpForm";
 import Heading1 from "@/components/Heading1";
-import Input from "@/components/Input";
+
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { Key, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Login() {
+export default function SignUp() {
   return (
     <Wrapper>
       {/* Heading */}
@@ -20,15 +19,7 @@ export default function Login() {
       </header>
 
       {/* Form */}
-      <section className="mb-4  mt-6">
-        <form action="" className="space-y-4">
-          <Input type="text" placeholder="Enter your nickname" icon={User} />
-          <Input type="email" placeholder="Email address" icon={Mail} />
-          <Input type="password" placeholder="Create password" icon={Key} />
-
-          <Button>Sign Up Now</Button>
-        </form>
-      </section>
+      <SignUpForm />
 
       <Paragraph className="text-center text-secondary-2 my-4">
         Or register with
