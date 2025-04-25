@@ -19,7 +19,7 @@ export default function SignUpForm() {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    if (![nickname, email, password].every(Boolean)) {
+    /* if (![nickname, email, password].every(Boolean)) {
       toast.error("Please fill in all fields!");
       return;
     }
@@ -36,13 +36,14 @@ export default function SignUpForm() {
         "Password must be at least 8 characters long and contain at least one letter and one number."
       );
       return;
-    }
+    } */
 
     /* Response from Server Action */
     const user = await createUser(formData);
 
     if (!user.status) {
       toast.error(user.message);
+      return;
     }
 
     toast.success(user.message);
