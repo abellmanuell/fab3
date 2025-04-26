@@ -1,31 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Input from "@/components/Input";
 import { Key, Mail, User } from "lucide-react";
 import Button from "@/components/Button";
-import { createUser } from "actions/authAction";
+import { signUpAction } from "actions/signUpAction";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function SignUpForm() {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   interface FormEvent extends React.FormEvent<HTMLFormElement> {}
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    setIsSubmitting(true);
 
-    /* Data validation */
+    /*********************************************************
+     * DATA VALIDATION
+     * Validation all the data before sending to backend
+     ********************************************************/
     const nickname = formData.get("nickname") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    /* if (![nickname, email, password].every(Boolean)) {
+    if (![nickname, email, password].every(Boolean)) {
       toast.error("Please fill in all fields!");
+      setIsSubmitting(false);
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.error("Please enter a valid email!");
+      setIsSubmitting(false);
       return;
     }
 
@@ -35,14 +43,19 @@ export default function SignUpForm() {
       toast.error(
         "Password must be at least 8 characters long and contain at least one letter and one number."
       );
-      return;
-    } */
+      setIsSubmitting(false);
 
-    /* Response from Server Action */
-    const user = await createUser(formData);
+      return;
+    }
+
+    /**************************************
+     *  Server Action invoke
+     * ************************************/
+    const user = await signUpAction(formData);
 
     if (!user.status) {
       toast.error(user.message);
+      setIsSubmitting(false);
       return;
     }
 
@@ -71,7 +84,7 @@ export default function SignUpForm() {
           placeholder="Create password"
           icon={Key}
         />
-        <Button>Sign Up Now</Button>
+        <Button isSubmitting={isSubmitting}>Sign Up Now</Button>
       </form>
     </section>
   );

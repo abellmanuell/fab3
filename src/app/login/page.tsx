@@ -1,16 +1,23 @@
-import Button from "@/components/Button";
 import ButtonOutline from "@/components/ButtonOutline";
+import LoginForm from "@/components/forms/LoginForm";
 import Heading1 from "@/components/Heading1";
-import Input from "@/components/Input";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { Key, Mail } from "lucide-react";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 
-export default function Login() {
+export default async function Login() {
+  const cookieStore = await cookies();
+  const access_token = cookieStore.get("access_token");
+
+  if (access_token?.value) {
+    redirect("/airdrops");
+  }
+
   return (
     <Wrapper>
       {/* Heading */}
@@ -20,24 +27,7 @@ export default function Login() {
       </header>
 
       {/* Form */}
-      <section className="mb-4  mt-6">
-        <form action="" className="space-y-4">
-          <Input type="email" placeholder="Email address" icon={Mail} />
-          <Input type="password" placeholder="Password" icon={Key} />
-
-          <Button>Sign in</Button>
-        </form>
-
-        {/* Forget Password  */}
-        <div className="flex justify-end my-2">
-          <Link
-            href="/forgot-password"
-            className="text-sm text-right text-secondary-2 "
-          >
-            Forgot Passowrd?
-          </Link>
-        </div>
-      </section>
+      <LoginForm />
 
       <Paragraph className="text-center text-secondary-2 my-4">
         Or login with

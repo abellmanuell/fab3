@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,12 +10,35 @@ import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
 import { ModalContext } from "@/contexts/modal-context";
+import { toast, ToastContainer } from "react-toastify";
+import { useRouter, useSearchParams } from "next/navigation";
+import Cookie from "js-cookie";
 
 export default function Page() {
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
+  const router = useRouter();
+
+  const query = useSearchParams();
+  const success = Boolean(query.get("success"));
+  const message = query.get("message");
+
+  const access_token = Cookie.get("access_token");
+
+  useEffect(() => {
+    if (!access_token) {
+      router.replace("/login?success=false&message=You're logout");
+    }
+
+    if (success && message) {
+      toast.success(message);
+      router.push("/airdrops");
+    }
+  }, [success, message]);
 
   return (
     <Wrapper>
+      <ToastContainer />
+
       <header className="flex flex-col justify-center items-center">
         <div>
           <Image src="/logo.svg" height="98" width="98" alt="Fab3 Logo" />
