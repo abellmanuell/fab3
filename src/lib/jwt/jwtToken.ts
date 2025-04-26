@@ -12,8 +12,11 @@ export function signToken(data: object) {
       access_token,
       message: "Successfully signed",
     };
-  } catch {
-    return { success: false, message: "Token not sign..." };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: `Token not signed. Error: ${err.message}`,
+    };
   }
 }
 
@@ -23,11 +26,15 @@ export function verifyToken(token: string) {
       throw new Error("SECRET_KEY is not defined in the environment variables");
     }
     var decoded = jwt.verify(token, process.env.SECRET_KEY);
-    console.log(decoded);
-  } catch (err) {
+    return {
+      success: true,
+      decoded,
+      message: "Token successfully verified",
+    };
+  } catch (err: any) {
     return {
       success: false,
-      message: "Incorrect secret key or session expired.",
+      message: `Incorrect secret key or session expired. Error: ${err.message}`,
     };
   }
 }

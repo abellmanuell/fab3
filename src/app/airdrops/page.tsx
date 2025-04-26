@@ -26,7 +26,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!access_token) {
-      router.replace("/login?success=false&message=You're logout");
+      router.replace("/login?success=false&message=You are logged out");
     }
 
     if (success && message) {

@@ -48,7 +48,7 @@ export default function LoginForm() {
           href="/forgot-password"
           className="text-sm text-right text-secondary-2 "
         >
-          Forgot Passowrd?
+          Forgot Password?
         </Link>
       </div>
     </section>
