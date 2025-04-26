@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { Key, Mail } from "lucide-react";
 import Link from "next/link";
 import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
+import { loginAction } from "actions/loginAction";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -21,11 +22,47 @@ export default function LoginForm() {
     }
   }, [success, message]);
 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  interface FormEvent extends React.FormEvent<HTMLFormElement> {}
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    setIsSubmitting(true);
+
+    /*********************************************************
+     * DATA VALIDATION
+     * Validation all the data before sending to backend
+     ********************************************************/
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email!");
+      setIsSubmitting(false);
+      return;
+    }
+
+    /**************************************
+     *  Server Action invoke
+     * ************************************/
+    const user = await loginAction(formData);
+
+    if (!user.status) {
+      toast.error(user.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    toast.success(user.message);
+  }
+
   return (
     <section className="mb-4  mt-6">
       <ToastContainer />
 
-      <form action="" className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           name="email"
           type="email"
@@ -39,7 +76,7 @@ export default function LoginForm() {
           icon={Key}
         />
 
-        <Button>Sign in</Button>
+        <Button isSubmitting={isSubmitting}>Sign in</Button>
       </form>
 
       {/* Forget Password  */}
