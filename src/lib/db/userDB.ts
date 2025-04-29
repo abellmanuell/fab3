@@ -1,4 +1,5 @@
 import connectToDatabase from "./connectToDatabase";
+import { v7 as uuidv7 } from "uuid";
 
 /* DATABASE USER COLLECTION FUNCTION */
 async function dbCollection(name: string) {
@@ -13,17 +14,9 @@ async function dbCollection(name: string) {
 /************************
  * CREATE USER
  * **********************/
-export async function createUser(
-  nickname: string,
-  email: string,
-  password: string
-) {
+export async function createUser(data: object) {
   const collection = await dbCollection("users");
-  return await collection.insertOne({
-    nickname,
-    email,
-    password,
-  });
+  return await collection.insertOne({ _id: uuidv7(), ...data });
 }
 
 /************************
@@ -32,4 +25,12 @@ export async function createUser(
 export async function findUser(email: string) {
   const collection = await dbCollection("users");
   return await collection.findOne({ email });
+}
+
+/************************
+ * FIND A USER BY ID
+ * **********************/
+export async function findUserById(_id: any) {
+  const collection = await dbCollection("users");
+  return await collection.findOne({ _id });
 }

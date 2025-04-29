@@ -58,15 +58,15 @@ export async function loginAction(formData: FormData) {
   }
 
   /* Sign & Set Cookie */
-  const { success, access_token, message } = await signToken({ ...existUser });
+  const { success, access_token, message } = await signToken(user.data);
 
   if (!success && !access_token) {
     console.log(message);
   }
 
-  matchedPassword &&
-    access_token &&
+  if (matchedPassword && access_token) {
     cookieStore.set("access_token", access_token);
+  }
 
   redirect("/airdrops?success=true&message=Successfully login!");
 }

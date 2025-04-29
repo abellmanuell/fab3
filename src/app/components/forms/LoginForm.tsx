@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import Input from "../Input";
 import { Key, Mail } from "lucide-react";
 import Link from "next/link";
 import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
-import { loginAction } from "actions/loginAction";
+import { login } from "actions/auth";
+import { MdCancel } from "react-icons/md";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -22,61 +23,46 @@ export default function LoginForm() {
     }
   }, [success, message]);
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  interface FormEvent extends React.FormEvent<HTMLFormElement> {}
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    setIsSubmitting(true);
-
-    /*********************************************************
-     * DATA VALIDATION
-     * Validation all the data before sending to backend
-     ********************************************************/
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Please enter a valid email!");
-      setIsSubmitting(false);
-      return;
-    }
-
-    /**************************************
-     *  Server Action invoke
-     * ************************************/
-    const user = await loginAction(formData);
-
-    if (!user.status) {
-      toast.error(user.message);
-      setIsSubmitting(false);
-      return;
-    }
-
-    toast.success(user.message);
-  }
+  const [state, action, pending] = useActionState(login, undefined);
 
   return (
-    <section className="mb-4  mt-6">
-      <ToastContainer />
+    <section className="mb-4  mt-2">
+      {/* Handle user errors */}
+      {
+        <p className="text-pink-500 text-center my-4 flex space-x-2 justify-center items-center">
+          {state?.message && (
+            <>
+              <MdCancel />
+              <span>{state.message}</span>
+            </>
+          )}
+        </p>
+      }
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <ToastContainer />
+      <form action={action} className="space-y-4">
         <Input
           name="email"
           type="email"
           placeholder="Email address"
           icon={Mail}
         />
+
+        {state?.errors?.email && (
+          <p className="text-pink-500">{state.errors.email}</p>
+        )}
+
         <Input
           name="password"
           type="password"
           placeholder="Password"
           icon={Key}
         />
+        {state?.errors?.password && (
+          <p className="text-pink-500">{state.errors.password}</p>
+        )}
 
-        <Button isSubmitting={isSubmitting}>Sign in</Button>
+        <Button isSubmitting={pending}>Sign in</Button>
       </form>
 
       {/* Forget Password  */}
