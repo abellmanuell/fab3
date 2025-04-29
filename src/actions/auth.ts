@@ -7,7 +7,7 @@ import {
   LoginFormSchema,
   SignupFormSchema,
 } from "../lib/authDefinitions";
-import { createSession } from "../lib/session";
+import { createSession, deleteSession } from "../lib/session";
 
 /************************************************
  *
@@ -104,4 +104,9 @@ export async function login(state: FormState, formData: FormData) {
 
   // Redirect
   redirect("/airdrops?success=true&message=Successfully login!");
+}
+
+export async function logout() {
+  deleteSession();
+  redirect("/login");
 }
