@@ -1,7 +1,4 @@
-"use client";
-
-import React, { useContext, useEffect, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Wrapper from "@/components/Wrapper";
@@ -9,36 +6,17 @@ import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
-import { ModalContext } from "@/contexts/modal-context";
-import { toast, ToastContainer } from "react-toastify";
-import { useRouter, useSearchParams } from "next/navigation";
-import Cookie from "js-cookie";
+import { verifySession } from "../../lib/verifySession";
+import AddAirdropButton from "@/components/AddAirdropButton";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
-  const router = useRouter();
-
-  const query = useSearchParams();
-  const success = Boolean(query.get("success"));
-  const message = query.get("message");
-
-  const access_token = Cookie.get("access_token");
-
-  useEffect(() => {
-    if (!access_token) {
-      router.replace("/login?success=false&message=You are logged out");
-    }
-
-    if (success && message) {
-      toast.success(message);
-      router.push("/airdrops");
-    }
-  }, [success, message]);
+export default async function Page() {
+  // Check verify a session
+  const session = await verifySession();
+  if (!session.isAuth) return redirect("/login");
 
   return (
     <Wrapper>
-      <ToastContainer />
-
       <header className="flex flex-col justify-center items-center">
         <div>
           <Image src="/logo.svg" height="98" width="98" alt="Fab3 Logo" />
@@ -71,18 +49,7 @@ export default function Page() {
       </header>
 
       {/* Add Airdrop Button */}
-      <div className="flex justify-center">
-        <Link
-          href="/airdrops/add"
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-          className="flex py-4 px-6 rounded-full space-x-2 bg-primary-2 text-primary-1 dark:bg-primary-1 dark:text-black cursor-pointer"
-        >
-          <Plus />
-          <span className="font-bold">Add Airdrop</span>
-        </Link>
-      </div>
+      <AddAirdropButton />
 
       <div className="px-4 mt-6 mb-4 flex justify-between">
         <p className="text-sm">All airdrops</p>

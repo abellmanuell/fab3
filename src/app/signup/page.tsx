@@ -1,10 +1,9 @@
 import ButtonOutline from "@/components/ButtonOutline";
 import SignUpForm from "@/components/forms/SignUpForm";
 import Heading1 from "@/components/Heading1";
-
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { cookies } from "next/headers";
+import { verifySession } from "../../lib/verifySession";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -12,12 +11,9 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export default async function SignUp() {
-  const cookieStore = await cookies();
-  const access_token = cookieStore.get("access_token");
-
-  if (access_token?.value) {
-    redirect("/airdrops");
-  }
+  // Redirect if session exist
+  const session = await verifySession();
+  if (session.isAuth) redirect("/airdrops");
 
   return (
     <Wrapper>

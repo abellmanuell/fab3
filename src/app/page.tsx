@@ -5,8 +5,12 @@ import React from "react";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
+import { verifySession } from "../lib/verifySession";
 
-export default function Page() {
+export default async function Page() {
+  // Redirect if session exist
+  const session = await verifySession();
+
   return (
     <Wrapper className="py-0 h-screen flex flex-col justify-center relative">
       <div className="p-6 flex">
@@ -28,10 +32,10 @@ export default function Page() {
         </Paragraph>
 
         <Link
-          href="/login"
+          href={session?.isAuth ? "/airdrops" : "/login"}
           className="flex bg-primary-1 font-bold justify-center rounded-full w-full p-4 dark:text-black"
         >
-          Farm Smarter Today
+          {session?.isAuth ? "Go Dashboard" : "Farm Smarter Today"}
         </Link>
       </section>
 
