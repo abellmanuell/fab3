@@ -1,12 +1,16 @@
-import Button from "@/components/Button";
 import Heading1 from "@/components/Heading1";
-import Input from "@/components/Input";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { Calendar, Crown, Link } from "lucide-react";
-import React from "react";
+import { verifySession } from "../../../lib/verifySession";
+import { redirect } from "next/navigation";
+import AddAirdropForm from "@/components/forms/AirdropForm";
+import { Crown } from "lucide-react";
 
-export default function AddAirdrop() {
+export default async function AddAirdrop() {
+  // Check verify a session
+  const session = await verifySession();
+  if (!session.isAuth) return redirect("/login");
+
   return (
     <Wrapper>
       <header className="mb-10">
@@ -26,16 +30,8 @@ export default function AddAirdrop() {
         </div>
       </header>
 
-      <form action="" className="space-y-4">
-        <Input
-          type="text"
-          placeholder="Airdrop Link (e.g. https://...)"
-          icon={Link}
-        />
-        <Input type="date" placeholder="Date" icon={Calendar} />
-
-        <Button>Add</Button>
-      </form>
+      {/* Add Airdrop Form */}
+      <AddAirdropForm btnContent="Add" userId={session.userId} />
     </Wrapper>
   );
 }

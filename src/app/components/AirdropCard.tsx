@@ -14,6 +14,7 @@ export default function AirdropCard({
   className,
   img_src,
   status,
+  view_href,
 }: AirdropProps) {
   return (
     <div
@@ -22,8 +23,12 @@ export default function AirdropCard({
         className
       )}
     >
-      <Link href={href} className="flex items-center justify-between grow p-4">
-        <div className="flex items-center space-x-2">
+      <Link
+        href={href}
+        className="flex items-center justify-between grow p-4"
+        target="_blank"
+      >
+        <div className="flex items-center space-x-4">
           <div>
             <Image src={img_src} height="40" width="40" alt={title} />
           </div>
@@ -44,7 +49,7 @@ export default function AirdropCard({
       </Link>
 
       <Link
-        href=""
+        href={view_href || "."}
         className="bg-primary-1 text-black h-full px-6 py-2 flex justify-center items-center"
       >
         <Eye size={20} />

@@ -8,6 +8,7 @@ export default function Input({
   type,
   placeholder,
   name,
+  value,
   icon: Icon,
 }: InputProps) {
   return (
@@ -27,6 +28,7 @@ export default function Input({
         placeholder={placeholder}
         className="w-full p-4 outline-none"
         name={name}
+        defaultValue={value ?? ""}
       />
     </div>
   );

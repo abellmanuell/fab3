@@ -47,6 +47,8 @@ export async function signup(state: FormState, formData: FormData) {
 
   // Insert the user into the database
   const { insertedId: id } = await createUser({
+    created_at: Date.now(),
+    updated_at: Date.now(),
     nickname,
     email,
     password: hashedPassword,

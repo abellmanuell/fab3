@@ -2,7 +2,7 @@ import connectToDatabase from "./connectToDatabase";
 import { v7 as uuidv7 } from "uuid";
 
 /* DATABASE USER COLLECTION FUNCTION */
-async function dbCollection(name: string) {
+export async function dbCollection(name: string) {
   const db = await connectToDatabase();
   if (!db) {
     throw new Error("Failed to connect to the database.");
