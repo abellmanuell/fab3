@@ -5,6 +5,9 @@ import { Pencil } from "lucide-react";
 import React from "react";
 import { redirect } from "next/navigation";
 import { verifySession } from "@/lib/verifySession";
+import EditAirdropForm from "@/app/components/forms/EditAirdropForm";
+import { findAirdrop } from "@/lib/db/airdropDB";
+import BackButton from "@/app/components/BackButton";
 
 export default async function EditAirdrop() {
   // Check verify a session
@@ -13,6 +16,7 @@ export default async function EditAirdrop() {
 
   return (
     <Wrapper>
+      <BackButton />
       <header className="mb-10">
         <div className="flex flex-col items-center ">
           <div className="bg-primary-2 text-primary-1 p-6 rounded-full dark:bg-primary-1/20">
@@ -30,18 +34,7 @@ export default async function EditAirdrop() {
         </div>
       </header>
 
-      {/* <EditAirdropForm airdrop={editAirdrop} btnContent="Save" /> */}
-
-      {/* <form action="" className="space-y-4">
-        <Input
-          type="text"
-          placeholder="Airdrop Link (e.g. https://...)"
-          icon={Link}
-        />
-        <Input type="date" placeholder="Date" icon={Calendar} />
-
-        <Button>Save</Button>
-      </form> */}
+      <EditAirdropForm btnContent="Save" />
     </Wrapper>
   );
 }

@@ -1,8 +1,9 @@
 "use server";
 import { findUserById } from "@/lib/db/userDB";
 import { AirdropFormSchema, FormState } from "@/lib/airdropDefinitions";
-import { createAirdrop } from "@/lib/db/airdropDB";
+import { createAirdrop, updateAirdrop } from "@/lib/db/airdropDB";
 import { redirect } from "next/navigation";
+import { EditAirdropFormSchema } from "@/lib/db/editAirdropDefinition";
 
 /************************************************
  *
@@ -49,4 +50,33 @@ export async function addAirdrop(state: FormState, formData: FormData) {
   } */
 
   airdropId && redirect("/airdrops");
+}
+
+export async function editAirdrop(state: FormState, formData: FormData) {
+  const validatedFields = EditAirdropFormSchema.safeParse({
+    userId: formData.get("userId"),
+    _id: formData.get("_id"),
+    airdropLink: formData.get("airdrop_link"),
+    claimDate: formData.get("claim_date"),
+  });
+  console.log(validatedFields.error?.issues);
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  // Prepare data for insertion into database
+  const { airdropLink, claimDate, userId, _id } = validatedFields.data;
+
+  const { acknowledged } = await updateAirdrop(_id, userId, {
+    airdropLink,
+    claimDate,
+  });
+
+  return {
+    message: "Successfully modified",
+  };
 }

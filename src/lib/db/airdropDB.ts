@@ -34,3 +34,14 @@ export async function deleteAirdrop(_id: string, userId: string) {
   const collection = await dbCollection("airdrops");
   return await collection.deleteOne({ $and: [{ _id }, { userId }] });
 }
+
+/************************
+ * FIND AN AIRDROP
+ * **********************/
+export async function updateAirdrop(_id: string, userId: string, data: any) {
+  const collection = await dbCollection("airdrops");
+  return await collection.updateOne(
+    { $and: [{ _id }, { userId }] },
+    { $set: { ...data } }
+  );
+}
