@@ -42,11 +42,11 @@ export async function addAirdrop(state: FormState, formData: FormData) {
     userId,
   });
 
-  if (airdropId) {
+  /*   if (airdropId) {
     return {
       message: "Successfully added!",
     };
-  }
+  } */
 
-  // redirect("/airdrops");
+  airdropId && redirect("/airdrops");
 }

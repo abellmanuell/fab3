@@ -5,6 +5,7 @@ import { verifySession } from "../../../lib/verifySession";
 import { redirect } from "next/navigation";
 import AddAirdropForm from "@/components/forms/AirdropForm";
 import { Crown } from "lucide-react";
+import BackButton from "@/components/BackButton";
 
 export default async function AddAirdrop() {
   // Check verify a session
@@ -13,6 +14,7 @@ export default async function AddAirdrop() {
 
   return (
     <Wrapper>
+      <BackButton />
       <header className="mb-10">
         <div className="flex flex-col items-center ">
           <div className="bg-primary-2 text-primary-1 p-6 rounded-full dark:bg-primary-1/20">

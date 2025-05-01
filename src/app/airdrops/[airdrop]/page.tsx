@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { useState } from "react";
+import BackButton from "@/components/BackButton";
 
 export default function SingleAirdrop() {
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
@@ -24,6 +25,7 @@ export default function SingleAirdrop() {
 
   return (
     <Wrapper>
+      <BackButton />
       <header className="flex flex-col justify-center items-center">
         {/* Profile Card */}
         <Link

@@ -12,9 +12,9 @@ export async function createAirdrop(data: object) {
 /************************
  * FIND AIRDROPS
  * **********************/
-export async function findAirdrops() {
+export async function findAirdrops(userId: any) {
   const collection = await dbCollection("airdrops");
-  return await collection.find({}).toArray();
+  return await collection.find({ userId }).toArray();
 }
 
 /************************

@@ -11,8 +11,6 @@ import AddAirdropButton from "@/components/AddAirdropButton";
 import { redirect } from "next/navigation";
 import { findUserById } from "../../lib/db/userDB";
 import { findAirdrops } from "../../lib/db/airdropDB";
-import axios from "axios";
-import * as cheerio from "cheerio";
 
 export default async function Page() {
   // Check verify a session
@@ -20,7 +18,7 @@ export default async function Page() {
   if (!session.isAuth) return redirect("/login");
 
   const user = await findUserById(session.userId);
-  const airdrops = await findAirdrops();
+  const airdrops = await findAirdrops(session.userId);
 
   return (
     <Wrapper>
@@ -39,7 +37,7 @@ export default async function Page() {
           <div>
             {user && !user.imgSrc ? (
               <div className="max-w-[40px] max-h-[40px] p-6 font-bold flex justify-center items-center rounded-full bg-gray-500">
-                D
+                {user && user.nickname[0]}
               </div>
             ) : (
               user && (
@@ -82,24 +80,26 @@ export default async function Page() {
             No airdrop
           </p>
         ) : (
-          airdrops.map(async (airdrop) => {
-            const { airdropLink, claimDate, _id } = airdrop;
-            const { hostname, host } = new URL(airdropLink);
+          airdrops
+            .map(async (airdrop) => {
+              const { airdropLink, claimDate, _id } = airdrop;
+              const { hostname, host } = new URL(airdropLink);
 
-            return (
-              <AirdropCard
-                key={_id}
-                title={hostname ?? host}
-                href={airdropLink}
-                img_src={
-                  airdrops &&
-                  `https://www.google.com/s2/favicons?domain=${host}&sz=128`
-                }
-                date={claimDate}
-                view_href={`airdrops/${_id}`}
-              />
-            );
-          })
+              return (
+                <AirdropCard
+                  key={_id.toString()}
+                  title={hostname ?? host}
+                  href={airdropLink}
+                  img_src={
+                    airdrops &&
+                    `https://www.google.com/s2/favicons?domain=${host}&sz=128`
+                  }
+                  date={claimDate}
+                  view_href={`airdrops/${_id}`}
+                />
+              );
+            })
+            .reverse()
         )}
       </AirdropGroup>
     </Wrapper>
