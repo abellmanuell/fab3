@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useActionState, useEffect } from "react";
-import Input from "../Input";
 import { Calendar, Link } from "lucide-react";
-import Button from "../Button";
+import Button from "@/components/Button";
 import { toast, ToastContainer } from "react-toastify";
 import { addAirdrop } from "actions/airdrops";
+import Input from "@/components/Input";
 
 export default function AirdropForm({
   btnContent,

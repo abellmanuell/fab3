@@ -1,6 +1,6 @@
 import React from "react";
-import { cn } from "@/utils/cn";
-import { InputProps } from "@/models/inputModel";
+import { cn } from "@/app/utils/cn";
+import { InputProps } from "@/app/models/inputModel";
 
 export default function Input({
   children,

@@ -1,7 +1,7 @@
 "use server";
-import { findUserById } from "../lib/db/userDB";
-import { AirdropFormSchema, FormState } from "../lib/airdropDefinitions";
-import { createAirdrop } from "../lib/db/airdropDB";
+import { findUserById } from "@/lib/db/userDB";
+import { AirdropFormSchema, FormState } from "@/lib/airdropDefinitions";
+import { createAirdrop } from "@/lib/db/airdropDB";
 import { redirect } from "next/navigation";
 
 /************************************************

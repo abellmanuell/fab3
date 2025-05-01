@@ -6,8 +6,8 @@ import {
   FormState,
   LoginFormSchema,
   SignupFormSchema,
-} from "../lib/authDefinitions";
-import { createSession, deleteSession } from "../lib/session";
+} from "@/lib/authDefinitions";
+import { createSession, deleteSession } from "@/lib/session";
 
 /************************************************
  *

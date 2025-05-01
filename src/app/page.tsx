@@ -1,11 +1,11 @@
-import { Crown, Plus, Search, Trash } from "lucide-react";
+import { Crown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
-import { verifySession } from "../lib/verifySession";
+import { verifySession } from "@/lib/verifySession";
 
 export default async function Page() {
   // Redirect if session exist

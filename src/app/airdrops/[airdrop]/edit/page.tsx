@@ -3,9 +3,8 @@ import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
 import { Pencil } from "lucide-react";
 import React from "react";
-import EditAirdropForm from "@/components/forms/AirdropForm";
-import { verifySession } from "../../../../lib/verifySession";
 import { redirect } from "next/navigation";
+import { verifySession } from "@/lib/verifySession";
 
 export default async function EditAirdrop() {
   // Check verify a session

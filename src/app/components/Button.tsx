@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { cn } from "@/utils/cn";
-import { ButtonProps } from "@/models/buttonModel";
+import { cn } from "@/app/utils/cn";
+import { ButtonProps } from "@/app/models/buttonModel";
 import { MoveRight } from "lucide-react";
 import { ScaleLoader } from "react-spinners";
 

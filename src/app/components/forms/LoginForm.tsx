@@ -1,9 +1,9 @@
 "use client";
 import React, { useActionState, useEffect, useState } from "react";
-import Input from "../Input";
+import Input from "@/components/Input";
 import { Key, Mail } from "lucide-react";
 import Link from "next/link";
-import Button from "../Button";
+import Button from "@/components/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import { login } from "actions/auth";

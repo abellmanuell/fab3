@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/app/utils/cn";
 import React from "react";
 
 export default function Paragraph({

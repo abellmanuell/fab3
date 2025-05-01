@@ -6,11 +6,12 @@ import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
-import { verifySession } from "../../lib/verifySession";
 import AddAirdropButton from "@/components/AddAirdropButton";
 import { redirect } from "next/navigation";
-import { findUserById } from "../../lib/db/userDB";
-import { findAirdrops } from "../../lib/db/airdropDB";
+import { verifySession } from "@/lib/verifySession";
+import { findUserById } from "@/lib/db/userDB";
+import { findAirdrops } from "@/lib/db/airdropDB";
+import Profile from "@/components/Profile";
 
 export default async function Page() {
   // Check verify a session
@@ -30,37 +31,7 @@ export default async function Page() {
           </Heading1>
         </div>
 
-        <Link
-          href="/settings"
-          className="flex items-center my-6 space-x-4 p-2 w-[265px] bg-secondary-1 leading-4 rounded-lg dark:bg-black"
-        >
-          <div>
-            {user && !user.imgSrc ? (
-              <div className="max-w-[40px] max-h-[40px] p-6 font-bold flex justify-center items-center rounded-full bg-gray-500">
-                {user && user.nickname[0]}
-              </div>
-            ) : (
-              user && (
-                <Image
-                  src={user?.imgSrc}
-                  height="40"
-                  width="40"
-                  alt="Fab3 Logo"
-                  className="rounded-full"
-                />
-              )
-            )}
-          </div>
-
-          <div>
-            <Heading1 className="text-md capitalize">
-              {user && user.nickname}
-            </Heading1>
-            <Paragraph className="text-secondary-2 text-sm">
-              {(user && user.username) ?? user?.email}
-            </Paragraph>
-          </div>
-        </Link>
+        <Profile {...user} />
       </header>
 
       {/* Add Airdrop Button */}

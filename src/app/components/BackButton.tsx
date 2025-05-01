@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/utils/cn";
+import { cn } from "@/app/utils/cn";
 import { MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";

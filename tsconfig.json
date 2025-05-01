@@ -20,8 +20,8 @@
     ],
     "baseUrl": "src/",
     "paths": {
-      "@/*": ["./app/*"],
-      "@/lib": ["./lib/*"],
+      "@/app/*": ["./app/*"],
+      "@/lib/*": ["./lib/*"],
       "@/assets/*": ["./app/assets/*"],
       "@/components/*": ["./app/components/*"]
     }
