@@ -3,8 +3,9 @@ import Link from "next/link";
 import React from "react";
 import Heading1 from "./Heading1";
 import Paragraph from "./Paragraph";
+import LoadingCard from "./LoadingCard";
 
-export default function Profile(user: any) {
+export default async function Profile(user: any) {
   return (
     <Link
       href="/settings"
@@ -29,12 +30,21 @@ export default function Profile(user: any) {
       </div>
 
       <div>
-        <Heading1 className="text-md capitalize">
-          {user && user.nickname}
-        </Heading1>
-        <Paragraph className="text-secondary-2 text-sm">
-          {(user && user.username) ?? user?.email}
-        </Paragraph>
+        {!user ? (
+          <LoadingCard height={1} />
+        ) : (
+          <Heading1 className="text-md capitalize">
+            {user && user.nickname}
+          </Heading1>
+        )}
+
+        {user.username || user.email ? (
+          <Paragraph className="text-secondary-2 text-sm">
+            {(user && user.username) ?? user?.email}
+          </Paragraph>
+        ) : (
+          <p>Loading..</p>
+        )}
       </div>
     </Link>
   );

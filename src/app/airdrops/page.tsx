@@ -1,9 +1,7 @@
 import { Search, Settings } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
-import Paragraph from "@/components/Paragraph";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
 import AddAirdropButton from "@/components/AddAirdropButton";
@@ -12,6 +10,7 @@ import { verifySession } from "@/lib/verifySession";
 import { findUserById } from "@/lib/db/userDB";
 import { findAirdrops } from "@/lib/db/airdropDB";
 import Profile from "@/components/Profile";
+import LoadingCard from "../components/LoadingCard";
 
 export default async function Page() {
   // Check verify a session
@@ -57,17 +56,23 @@ export default async function Page() {
               const { hostname, host } = new URL(airdropLink);
 
               return (
-                <AirdropCard
-                  key={_id.toString()}
-                  title={hostname ?? host}
-                  href={airdropLink}
-                  img_src={
-                    airdrops &&
-                    `https://www.google.com/s2/favicons?domain=${host}&sz=128`
-                  }
-                  date={claimDate}
-                  view_href={`airdrops/${_id}`}
-                />
+                <>
+                  {!airdrop ? (
+                    <LoadingCard height={60} />
+                  ) : (
+                    <AirdropCard
+                      key={_id.toString()}
+                      title={hostname ?? host}
+                      href={airdropLink}
+                      img_src={
+                        airdrops &&
+                        `https://www.google.com/s2/favicons?domain=${host}&sz=128`
+                      }
+                      date={claimDate}
+                      view_href={`airdrops/${_id}`}
+                    />
+                  )}
+                </>
               );
             })
             .reverse()
