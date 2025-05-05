@@ -4,6 +4,7 @@ import React from "react";
 import Heading1 from "./Heading1";
 import Paragraph from "./Paragraph";
 import LoadingCard from "./LoadingCard";
+import { Settings } from "lucide-react";
 
 export default async function Profile(user: any) {
   return (
@@ -29,7 +30,7 @@ export default async function Profile(user: any) {
         )}
       </div>
 
-      <div>
+      <div className="grow">
         {!user ? (
           <LoadingCard height={1} />
         ) : (
@@ -43,8 +44,12 @@ export default async function Profile(user: any) {
             {(user && user.username) ?? user?.email}
           </Paragraph>
         ) : (
-          <p>Loading..</p>
+          <p>Loading...</p>
         )}
+      </div>
+
+      <div className="p-2">
+        <Settings />
       </div>
     </Link>
   );
