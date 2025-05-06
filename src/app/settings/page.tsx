@@ -25,7 +25,7 @@ export default async function Settings() {
       <main>
         <Link
           href="/settings/account-information"
-          className="py-4 px-6 rounded-md flex items-center space-x-6 hover:bg-gray-100"
+          className="py-4 px-6 rounded-md flex items-center space-x-6 hover:bg-gray-100 dark:hover:bg-gray-100/10"
         >
           <div>
             <User />
