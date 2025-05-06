@@ -6,4 +6,5 @@ export interface InputProps {
   icon?: any;
   name: string;
   value?: any;
+  disabled?: boolean;
 }

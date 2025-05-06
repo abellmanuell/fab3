@@ -1,12 +1,20 @@
-import BackButton from "@/app/components/BackButton";
-import Button from "@/app/components/Button";
-import Heading1 from "@/app/components/Heading1";
-import Input from "@/app/components/Input";
-import Wrapper from "@/app/components/Wrapper";
-import { Mail, User } from "lucide-react";
 import React from "react";
+import BackButton from "@/app/components/BackButton";
+import Heading1 from "@/app/components/Heading1";
+import Wrapper from "@/app/components/Wrapper";
+import { verifySession } from "@/lib/verifySession";
+import { redirect } from "next/navigation";
+import { findUserById } from "@/lib/db/userDB";
+import EditUser from "@/app/components/forms/EditUser";
+import { editUser } from "actions/user";
 
-export default function AccountInformation() {
+export default async function AccountInformation() {
+  // Check verify a session
+  const session = await verifySession();
+  if (!session.isAuth) return redirect("/login");
+
+  const user = await findUserById(session.userId);
+
   return (
     <Wrapper>
       <header>
@@ -18,22 +26,7 @@ export default function AccountInformation() {
         </div>
       </header>
 
-      <form action="" className="space-y-4">
-        <Input
-          type="text"
-          name="nickname"
-          placeholder="Enter your nickname"
-          icon={User}
-        />
-
-        <Input
-          type="email"
-          name="email"
-          placeholder="Enter your email address"
-          icon={Mail}
-        />
-        <Button>Save</Button>
-      </form>
+      <EditUser user={user} editUser={editUser} />
     </Wrapper>
   );
 }

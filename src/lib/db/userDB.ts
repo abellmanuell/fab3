@@ -34,3 +34,12 @@ export async function findUserById(_id: any) {
   const collection = await dbCollection("users");
   return await collection.findOne({ _id });
 }
+
+/************************
+ * UPDATE A USER
+ * **********************/
+export async function updateUser(_id: any, data: any) {
+  const collection = await dbCollection("users");
+  const updated_at = Date.now();
+  return await collection.updateOne({ _id }, { $set: { updated_at, ...data } });
+}
