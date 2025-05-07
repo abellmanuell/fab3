@@ -16,7 +16,7 @@ export async function createAirdrop(data: object) {
  * **********************/
 export async function findAirdrops(userId: any) {
   const collection = await dbCollection("airdrops");
-  return await collection.find({ userId }).toArray();
+  return await collection.find({ userId } as any).toArray();
 }
 
 /************************
@@ -24,7 +24,7 @@ export async function findAirdrops(userId: any) {
  * **********************/
 export async function findAirdrop(_id: string) {
   const collection = await dbCollection("airdrops");
-  return await collection.findOne({ _id });
+  return await collection.findOne({ _id } as any);
 }
 
 /************************
@@ -32,7 +32,7 @@ export async function findAirdrop(_id: string) {
  * **********************/
 export async function deleteAirdrop(_id: string, userId: string) {
   const collection = await dbCollection("airdrops");
-  return await collection.deleteOne({ $and: [{ _id }, { userId }] });
+  return await collection.deleteOne({ $and: [{ _id }, { userId }] } as any);
 }
 
 /************************
@@ -41,7 +41,9 @@ export async function deleteAirdrop(_id: string, userId: string) {
 export async function updateAirdrop(_id: string, userId: string, data: any) {
   const collection = await dbCollection("airdrops");
   return await collection.updateOne(
-    { $and: [{ _id }, { userId }] },
-    { $set: { ...data } }
+    { $and: [{ _id }, { userId }] } as any,
+    {
+      $set: { ...data },
+    } as any
   );
 }
