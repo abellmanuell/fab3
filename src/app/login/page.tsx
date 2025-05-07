@@ -35,7 +35,7 @@ export default async function Login() {
       <ButtonOutline icon={FcGoogle}>Google</ButtonOutline>
 
       <div className="text-center mt-4 text-sm">
-        Don't have an account?{" "}
+        {`Don\'t have an account? `}
         <Link href="/signup" className="text-right text-primary-1 font-bold ">
           Sign Up now
         </Link>

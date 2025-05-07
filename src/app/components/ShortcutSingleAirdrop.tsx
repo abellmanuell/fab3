@@ -6,12 +6,10 @@ import DeleteDialog from "./DeleteDialog";
 
 export default function ShortcutSingleAirdrop({
   airdropLink,
-  claimDate,
   _id,
   userId,
 }: {
   airdropLink: string;
-  claimDate: string;
   _id: string;
   userId: string;
 }) {

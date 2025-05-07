@@ -1,14 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
-import { CircleCheck, CircleX, Trash } from "lucide-react";
-import { AirdropProps } from "@/models/airdropModel";
-import { cn } from "@/utils/cn";
+import { CircleCheck, CircleX } from "lucide-react";
+import { AirdropProps } from "@/app/models/airdropModel";
+import { cn } from "@/app/utils/cn";
 
 export default function AirdropTask({
-  href,
   date,
   title,
   className,

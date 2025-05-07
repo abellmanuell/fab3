@@ -1,4 +1,4 @@
-import { Search, Settings } from "lucide-react";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";

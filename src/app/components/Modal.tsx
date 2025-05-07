@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalContext } from "@/contexts/modal-context";
+import { ModalContext } from "@/app/contexts/modal-context";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";

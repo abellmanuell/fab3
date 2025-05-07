@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import ShortcutSingleAirdrop from "./ShortcutSingleAirdrop";
 import LoadingCard from "./LoadingCard";
 
-export default function AirdropBoard({ findAirdrop }: any) {
+export default function AirdropBoard({ findAirdrop }: { findAirdrop: any }) {
   const { airdropId } = useParams<{ airdropId: string }>();
   const [airdrop, setAirdrop] = useState<{
     airdropLink: string;
@@ -18,7 +18,7 @@ export default function AirdropBoard({ findAirdrop }: any) {
 
   useEffect(() => {
     findAirdrop(airdropId).then((resp: any) => setAirdrop(resp));
-  }, []);
+  }, [airdropId, findAirdrop]);
 
   const { hostname, host } = airdrop?.airdropLink
     ? new URL(airdrop.airdropLink)
@@ -49,7 +49,6 @@ export default function AirdropBoard({ findAirdrop }: any) {
 
       <ShortcutSingleAirdrop
         airdropLink={airdrop?.airdropLink || ""}
-        claimDate={airdrop?.claimDate || ""}
         _id={airdrop?._id || ""}
         userId={airdrop?.userId || ""}
       />

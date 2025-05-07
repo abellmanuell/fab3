@@ -3,7 +3,6 @@ import { cn } from "@/app/utils/cn";
 import { InputProps } from "@/app/models/inputModel";
 
 export default function Input({
-  children,
   className,
   type,
   placeholder,

@@ -11,7 +11,7 @@ export default function DeleteDialog({
 }: {
   isOpen: boolean;
   setIsOpen: any;
-  airdrop: any;
+  airdrop: { _id: string; userId: string };
 }) {
   const router = useRouter();
   return (

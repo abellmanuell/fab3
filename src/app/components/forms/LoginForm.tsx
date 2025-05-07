@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect } from "react";
 import Input from "@/components/Input";
 import { Key, Mail } from "lucide-react";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import { MdCancel } from "react-icons/md";
 
-export default function LoginForm({ login }: any) {
+export default function LoginForm({ login }: { login: any }) {
   const router = useRouter();
 
   const query = useSearchParams();
@@ -20,7 +20,7 @@ export default function LoginForm({ login }: any) {
       toast.error(message);
       router.push("/login");
     }
-  }, [success, message]);
+  }, [success, message, router]);
 
   const [state, action, pending] = useActionState(login, {
     message: "",

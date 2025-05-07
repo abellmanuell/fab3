@@ -23,9 +23,9 @@ export async function updateUserDataAction(
   }
 
   // Prepare data for insertion into database
-  const { nickname, email, userId } = validatedFields.data;
+  const { nickname, userId } = validatedFields.data;
 
-  const { acknowledged } = await updateUser(userId, {
+  await updateUser(userId, {
     nickname,
   });
 

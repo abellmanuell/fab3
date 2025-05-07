@@ -5,7 +5,7 @@ import { Key, Mail, User } from "lucide-react";
 import Button from "@/app/components/PrimaryButton";
 import { MdCancel } from "react-icons/md";
 
-export default function SignUpForm({ signUp }: any) {
+export default function SignUpForm({ signUp }: { signUp: any }) {
   const [state, action, pending] = useActionState(signUp, {
     message: "",
     errors: {} as Record<string, string | string[]>,

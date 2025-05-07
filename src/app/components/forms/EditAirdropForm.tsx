@@ -2,7 +2,7 @@
 
 import React, { useActionState, useEffect, useState } from "react";
 import { Calendar, Link } from "lucide-react";
-import Button from "@/app/components/PrimaryButton";
+import Button from "@/components/PrimaryButton";
 import { toast, ToastContainer } from "react-toastify";
 import Input from "@/components/Input";
 import { useParams } from "next/navigation";

@@ -18,7 +18,7 @@ export default function AddAirdropButton() {
       toast.success(airdropMessage);
       router.replace("/airdrops");
     }
-  }, [isAirdropSuccess, airdropMessage]);
+  }, [isAirdropSuccess, airdropMessage, router]);
 
   return (
     <>

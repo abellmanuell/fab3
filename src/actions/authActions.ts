@@ -102,7 +102,7 @@ export async function loginAuth(state: FormState, formData: FormData) {
     };
   }
 
-  matchedPassword && (await createSession(user?._id));
+  await createSession(user?._id);
 
   // Redirect
   redirect("/airdrops?success=true&message=Successfully login!");

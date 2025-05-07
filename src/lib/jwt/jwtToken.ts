@@ -25,16 +25,16 @@ export function verifyToken(token: string) {
     if (!process.env.SECRET_KEY) {
       throw new Error("SECRET_KEY is not defined in the environment variables");
     }
-    var decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     return {
       success: true,
       decoded,
       message: "Token successfully verified",
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
-      message: `Incorrect secret key or session expired. Error: ${err.message}`,
+      message: `Incorrect secret key or session expired.`,
     };
   }
 }

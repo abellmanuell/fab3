@@ -4,7 +4,13 @@ import React, { useActionState } from "react";
 import Input from "../Input";
 import Button from "../PrimaryButton";
 
-export default function EditUserForm({ userData, updateUserDataAction }: any) {
+export default function EditUserForm({
+  userData,
+  updateUserDataAction,
+}: {
+  userData: any;
+  updateUserDataAction: any;
+}) {
   const [state, action, pending] = useActionState<{ message: string }>(
     updateUserDataAction,
     { message: "" }

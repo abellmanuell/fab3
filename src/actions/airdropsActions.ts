@@ -38,19 +38,13 @@ export async function addAirdropAction(state: FormState, formData: FormData) {
   }
 
   // Create an airdrop
-  const { insertedId: airdropId } = await createAirdrop({
+  await createAirdrop({
     airdropLink,
     claimDate,
     userId,
   });
 
-  /*   if (airdropId) {
-    return {
-      message: "Successfully added!",
-    };
-  } */
-
-  airdropId && redirect("/airdrops");
+  redirect("/airdrops");
 }
 
 export async function updateAirdropAction(
@@ -75,7 +69,7 @@ export async function updateAirdropAction(
   // Prepare data for insertion into database
   const { airdropLink, claimDate, userId, _id } = validatedFields.data;
 
-  const { acknowledged } = await updateAirdrop(_id, userId, {
+  await updateAirdrop(_id, userId, {
     airdropLink,
     claimDate,
   });
