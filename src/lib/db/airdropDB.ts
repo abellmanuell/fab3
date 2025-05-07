@@ -8,7 +8,7 @@ import { v7 as uuidv7 } from "uuid";
  * **********************/
 export async function createAirdrop(data: object) {
   const collection = await dbCollection("airdrops");
-  return await collection.insertOne({ _id: uuidv7(), ...data });
+  return await collection.insertOne({ _id: uuidv7(), ...data } as any);
 }
 
 /************************
