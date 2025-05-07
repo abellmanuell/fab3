@@ -55,10 +55,16 @@ export async function signUpAuth(state: FormState, formData: FormData) {
   });
 
   // Find user by id
-  const user = await findUserById(id);
+  const userData = await findUserById(id);
+
+  if (!userData) {
+    throw new Error("User not found after creation.");
+  }
+
+  const { _id } = userData;
 
   // Create user session
-  await createSession(user?._id);
+  await createSession(_id);
   // Redirect user
   redirect("/airdrops?success=true&message=Successfully created!");
 }
@@ -85,16 +91,16 @@ export async function loginAuth(state: FormState, formData: FormData) {
 
   // Prepare data for insertion into database
   const { email, password } = validatedFields.data;
-  const user = await findUser(email);
+  const userData = await findUser(email);
 
-  if (!user) {
+  if (!userData) {
     return {
       message: "Account not found.",
     };
   }
 
   // Check for password match
-  const matchedPassword = await bcrypt.compare(password, user?.password);
+  const matchedPassword = await bcrypt.compare(password, userData?.password);
 
   if (!matchedPassword) {
     return {
@@ -102,7 +108,7 @@ export async function loginAuth(state: FormState, formData: FormData) {
     };
   }
 
-  await createSession(user?._id);
+  await createSession(userData?._id);
 
   // Redirect
   redirect("/airdrops?success=true&message=Successfully login!");
