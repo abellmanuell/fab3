@@ -2,12 +2,14 @@
 import React, { useActionState } from "react";
 import Input from "@/components/Input";
 import { Key, Mail, User } from "lucide-react";
-import Button from "@/components/Button";
-import { signup } from "actions/auth";
+import Button from "@/app/components/PrimaryButton";
 import { MdCancel } from "react-icons/md";
 
-export default function SignUpForm() {
-  const [state, action, pending] = useActionState(signup, undefined);
+export default function SignUpForm({ signUp }: any) {
+  const [state, action, pending] = useActionState(signUp, {
+    message: "",
+    errors: {} as Record<string, string | string[]>,
+  });
 
   return (
     <section className="mb-4 mt-2">
@@ -49,14 +51,15 @@ export default function SignUpForm() {
           icon={Key}
         />
         <ul>
-          {state?.errors?.password &&
-            state.errors.password.map((error) => {
-              return (
-                <li key={error} className="text-pink-500">
-                  {error}
-                </li>
-              );
-            })}
+          {Array.isArray(state?.errors?.password) &&
+            state.errors.password.map((error) => (
+              <li key={error} className="text-pink-500">
+                {error}
+              </li>
+            ))}
+          {typeof state?.errors?.password === "string" && (
+            <li className="text-pink-500">{state.errors.password}</li>
+          )}
         </ul>
         <Button isSubmitting={pending}>Sign Up Now</Button>
       </form>

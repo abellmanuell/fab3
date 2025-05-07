@@ -15,7 +15,7 @@ import { createSession, deleteSession } from "@/lib/session";
  *
  ***********************************************/
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signUpAuth(state: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     nickname: formData.get("nickname"),
@@ -69,7 +69,7 @@ export async function signup(state: FormState, formData: FormData) {
  *
  ***********************************************/
 
-export async function login(state: FormState, formData: FormData) {
+export async function loginAuth(state: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),

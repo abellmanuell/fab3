@@ -6,6 +6,7 @@ import AddAirdropForm from "@/components/forms/AirdropForm";
 import { Crown } from "lucide-react";
 import BackButton from "@/components/BackButton";
 import { verifySession } from "@/lib/verifySession";
+import { addAirdropAction } from "actions/airdropsActions";
 
 export default async function AddAirdrop() {
   // Check verify a session
@@ -33,7 +34,10 @@ export default async function AddAirdrop() {
       </header>
 
       {/* Add Airdrop Form */}
-      <AddAirdropForm btnContent="Add" userId={session.userId} />
+      <AddAirdropForm
+        addAirdropAction={addAirdropAction}
+        userId={session.userId}
+      />
     </Wrapper>
   );
 }

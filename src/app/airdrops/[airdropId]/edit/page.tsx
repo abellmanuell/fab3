@@ -1,13 +1,14 @@
+import React from "react";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
 import { Pencil } from "lucide-react";
-import React from "react";
 import { redirect } from "next/navigation";
 import { verifySession } from "@/lib/verifySession";
 import EditAirdropForm from "@/app/components/forms/EditAirdropForm";
 import { findAirdrop } from "@/lib/db/airdropDB";
 import BackButton from "@/app/components/BackButton";
+import { updateAirdropAction } from "actions/airdropsActions";
 
 export default async function EditAirdrop() {
   // Check verify a session
@@ -34,7 +35,10 @@ export default async function EditAirdrop() {
         </div>
       </header>
 
-      <EditAirdropForm btnContent="Save" />
+      <EditAirdropForm
+        findAirdrop={findAirdrop}
+        updateAirdropAction={updateAirdropAction}
+      />
     </Wrapper>
   );
 }

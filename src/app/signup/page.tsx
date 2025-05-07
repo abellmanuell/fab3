@@ -9,6 +9,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
+import { signUpAuth } from "actions/authActions";
 
 export default async function SignUp() {
   // Redirect if session exist
@@ -24,7 +25,7 @@ export default async function SignUp() {
       </header>
 
       {/* Form */}
-      <SignUpForm />
+      <SignUpForm signUp={signUpAuth} />
 
       <Paragraph className="text-center text-secondary-2 my-4">
         Or register with

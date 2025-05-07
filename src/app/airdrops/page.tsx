@@ -17,8 +17,8 @@ export default async function Page() {
   const session = await verifySession();
   if (!session.isAuth) return redirect("/login");
 
-  const user = await findUserById(session.userId);
-  const airdrops = await findAirdrops(session.userId);
+  const userData = await findUserById(session.userId);
+  const airdropList = await findAirdrops(session.userId);
 
   return (
     <Wrapper>
@@ -30,7 +30,7 @@ export default async function Page() {
           </Heading1>
         </div>
 
-        <Profile {...user} />
+        <Profile {...userData} />
       </header>
 
       {/* Add Airdrop Button */}
@@ -45,12 +45,12 @@ export default async function Page() {
 
       {/* Airdrops*/}
       <AirdropGroup>
-        {!airdrops.length ? (
+        {!airdropList.length ? (
           <p className="text-center text-secondary-2 text-sm my-10">
             No airdrop
           </p>
         ) : (
-          airdrops
+          airdropList
             .map(async (airdrop) => {
               const { airdropLink, claimDate, _id } = airdrop;
               const { hostname, host } = new URL(airdropLink);
@@ -65,7 +65,7 @@ export default async function Page() {
                       title={hostname ?? host}
                       href={airdropLink}
                       img_src={
-                        airdrops &&
+                        airdropList &&
                         `https://www.google.com/s2/favicons?domain=${host}&sz=128`
                       }
                       date={claimDate}

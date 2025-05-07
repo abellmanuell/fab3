@@ -4,13 +4,14 @@ import { AirdropFormSchema, FormState } from "@/lib/airdropDefinitions";
 import { createAirdrop, updateAirdrop } from "@/lib/db/airdropDB";
 import { redirect } from "next/navigation";
 import { EditAirdropFormSchema } from "@/lib/db/editAirdropDefinition";
+import { revalidatePath } from "next/cache";
 
 /************************************************
  *
  *        ADD AIRDROP SERVER ACTION
  *
  ***********************************************/
-export async function addAirdrop(state: FormState, formData: FormData) {
+export async function addAirdropAction(state: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = AirdropFormSchema.safeParse({
     userId: formData.get("userId"),
@@ -52,7 +53,10 @@ export async function addAirdrop(state: FormState, formData: FormData) {
   airdropId && redirect("/airdrops");
 }
 
-export async function editAirdrop(state: FormState, formData: FormData) {
+export async function updateAirdropAction(
+  state: FormState,
+  formData: FormData
+) {
   const validatedFields = EditAirdropFormSchema.safeParse({
     userId: formData.get("userId"),
     _id: formData.get("_id"),
@@ -75,6 +79,8 @@ export async function editAirdrop(state: FormState, formData: FormData) {
     airdropLink,
     claimDate,
   });
+
+  revalidatePath("/airdrops/[airdrop]/edit");
 
   return {
     message: "Successfully modified",

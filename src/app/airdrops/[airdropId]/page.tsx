@@ -11,16 +11,16 @@ export default async function SingleAirdrop() {
   const session = await verifySession();
   if (!session.isAuth) return redirect("/login");
 
-  const user = await findUserById(session.userId);
+  const userData = await findUserById(session.userId);
 
   return (
     <Wrapper>
       <BackButton />
       <header className="flex flex-col justify-center items-center">
-        <Profile {...user} />
+        <Profile {...userData} />
       </header>
 
-      <AirdropBoard airdropFn={findAirdrop} />
+      <AirdropBoard findAirdrop={findAirdrop} />
     </Wrapper>
   );
 }

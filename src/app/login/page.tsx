@@ -9,6 +9,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
+import { loginAuth } from "actions/authActions";
 
 export default async function Login() {
   // Redirect if session exist
@@ -24,7 +25,7 @@ export default async function Login() {
       </header>
 
       {/* Form */}
-      <LoginForm />
+      <LoginForm login={loginAuth} />
 
       <Paragraph className="text-center text-secondary-2 my-4">
         Or login with

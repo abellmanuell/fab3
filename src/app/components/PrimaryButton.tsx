@@ -5,7 +5,7 @@ import { ButtonProps } from "@/app/models/buttonModel";
 import { MoveRight } from "lucide-react";
 import { ScaleLoader } from "react-spinners";
 
-export default function Button({
+export default function PrimaryButton({
   children,
   className,
   isSubmitting,

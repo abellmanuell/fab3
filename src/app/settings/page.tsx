@@ -7,6 +7,7 @@ import Paragraph from "../components/Paragraph";
 import { User } from "lucide-react";
 import { verifySession } from "@/lib/verifySession";
 import { redirect } from "next/navigation";
+import { logout } from "actions/authActions";
 
 export default async function Settings() {
   // Check verify a session
@@ -37,6 +38,13 @@ export default async function Settings() {
             </Paragraph>
           </div>
         </Link>
+
+        <button
+          onClick={logout}
+          className="text-sm text-red-500 cursor-pointer w-full text-center p-4"
+        >
+          Logout
+        </button>
       </main>
     </Wrapper>
   );

@@ -2,11 +2,11 @@
 import { Mail, User } from "lucide-react";
 import React, { useActionState } from "react";
 import Input from "../Input";
-import Button from "../Button";
+import Button from "../PrimaryButton";
 
-export default function EditUser({ user, editUser }: any) {
+export default function EditUserForm({ userData, updateUserDataAction }: any) {
   const [state, action, pending] = useActionState<{ message: string }>(
-    editUser,
+    updateUserDataAction,
     { message: "" }
   );
 
@@ -22,7 +22,7 @@ export default function EditUser({ user, editUser }: any) {
           name="nickname"
           placeholder="Enter your nickname"
           icon={User}
-          value={user && user?.nickname}
+          value={userData && userData?.nickname}
         />
 
         <Input
@@ -31,14 +31,14 @@ export default function EditUser({ user, editUser }: any) {
           disabled={true}
           placeholder="Enter your email address"
           icon={Mail}
-          value={user && user?.email}
+          value={userData && userData?.email}
           className="opacity-50"
         />
 
         <Input
           type="hidden"
           name="userId"
-          value={user && user?._id}
+          value={userData && userData?._id}
           className="hidden"
         />
         <Button isSubmitting={pending}>Save</Button>

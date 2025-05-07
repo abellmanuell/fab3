@@ -10,15 +10,15 @@ export default function AddAirdropButton() {
   const router = useRouter();
 
   const query = useSearchParams();
-  const success = Boolean(query.get("success"));
-  const message = query.get("message");
+  const isAirdropSuccess = Boolean(query.get("success"));
+  const airdropMessage = query.get("message");
 
   useEffect(() => {
-    if (success && message) {
-      toast.success(message);
+    if (isAirdropSuccess && airdropMessage) {
+      toast.success(airdropMessage);
       router.replace("/airdrops");
     }
-  }, [success, message]);
+  }, [isAirdropSuccess, airdropMessage]);
 
   return (
     <>

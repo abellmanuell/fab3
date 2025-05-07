@@ -2,26 +2,33 @@
 
 import React, { useActionState, useEffect, useState } from "react";
 import { Calendar, Link } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/app/components/PrimaryButton";
 import { toast, ToastContainer } from "react-toastify";
 import Input from "@/components/Input";
-import { editAirdrop } from "actions/airdrops";
-import { findAirdrop } from "@/lib/db/airdropDB";
 import { useParams } from "next/navigation";
 import LoadingCard from "../LoadingCard";
 
 interface EditAirdropFormProps {
-  btnContent: string;
-  userId?: any;
+  findAirdrop: any;
+  updateAirdropAction: any;
 }
 
 export default function EditAirdropForm({
-  btnContent,
-  userId,
+  findAirdrop,
+  updateAirdropAction,
 }: EditAirdropFormProps) {
-  const [state, action, pending] = useActionState(editAirdrop, undefined);
+  const [state, action, pending] = useActionState<{
+    message: string;
+    errors: {
+      airdropLink?: string;
+      claimDate?: string;
+    };
+  }>(updateAirdropAction, {
+    message: "",
+    errors: {},
+  });
 
-  const { airdrop: airdropId } = useParams();
+  const { airdropId } = useParams();
   const [airdrop, setAirdrop] = useState<{
     airdropLink: string;
     claimDate: string;
@@ -31,7 +38,7 @@ export default function EditAirdropForm({
 
   useEffect(() => {
     if (state?.message) {
-      toast.success(state.message);
+      toast.success(state?.message);
     }
 
     (async () => {
@@ -67,7 +74,7 @@ export default function EditAirdropForm({
         )}
 
         {state?.errors?.airdropLink && (
-          <p className="text-pink-500">{state.errors.airdropLink}</p>
+          <p className="text-pink-500">{state.errors?.airdropLink}</p>
         )}
 
         {!airdrop?.airdropLink ? (
@@ -101,7 +108,7 @@ export default function EditAirdropForm({
             value={airdrop._id}
           />
         )}
-        <Button isSubmitting={pending}>{btnContent}</Button>
+        <Button isSubmitting={pending}>Save</Button>
       </form>
     </>
   );

@@ -3,7 +3,10 @@ import { EditUserFormSchema, FormState } from "@/lib/db/editUserDefinition";
 import { updateUser } from "@/lib/db/userDB";
 import { revalidatePath } from "next/cache";
 
-export async function editUser(state: FormState, formData: FormData) {
+export async function updateUserDataAction(
+  state: FormState,
+  formData: FormData
+) {
   const validatedFields = EditUserFormSchema.safeParse({
     userId: formData.get("userId"),
     nickname: formData.get("nickname"),

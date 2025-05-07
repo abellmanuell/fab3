@@ -3,13 +3,12 @@ import React, { useActionState, useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { Key, Mail } from "lucide-react";
 import Link from "next/link";
-import Button from "@/components/Button";
+import Button from "@/app/components/PrimaryButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
-import { login } from "actions/auth";
 import { MdCancel } from "react-icons/md";
 
-export default function LoginForm() {
+export default function LoginForm({ login }: any) {
   const router = useRouter();
 
   const query = useSearchParams();
@@ -23,7 +22,10 @@ export default function LoginForm() {
     }
   }, [success, message]);
 
-  const [state, action, pending] = useActionState(login, undefined);
+  const [state, action, pending] = useActionState(login, {
+    message: "",
+    errors: {} as Record<string, string>,
+  });
 
   return (
     <section className="mb-4  mt-2">

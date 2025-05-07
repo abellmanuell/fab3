@@ -2,19 +2,21 @@
 
 import React, { useActionState, useEffect } from "react";
 import { Calendar, Link } from "lucide-react";
-import Button from "@/components/Button";
+import Button from "@/app/components/PrimaryButton";
 import { toast, ToastContainer } from "react-toastify";
-import { addAirdrop } from "actions/airdrops";
 import Input from "@/components/Input";
 
 export default function AirdropForm({
-  btnContent,
+  addAirdropAction,
   userId,
 }: {
-  btnContent: string;
+  addAirdropAction: any;
   userId?: any;
 }) {
-  const [state, action, pending] = useActionState(addAirdrop, undefined);
+  const [state, action, pending] = useActionState(addAirdropAction, {
+    message: "",
+    errors: { airdropLink: "", claimDate: "" },
+  });
 
   useEffect(() => {
     if (state?.message) {
@@ -54,7 +56,7 @@ export default function AirdropForm({
             value={userId}
           />
         )}
-        <Button isSubmitting={pending}>{btnContent}</Button>
+        <Button isSubmitting={pending}>Add</Button>
       </form>
     </>
   );

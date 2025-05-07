@@ -5,15 +5,15 @@ import Wrapper from "@/app/components/Wrapper";
 import { verifySession } from "@/lib/verifySession";
 import { redirect } from "next/navigation";
 import { findUserById } from "@/lib/db/userDB";
-import EditUser from "@/app/components/forms/EditUser";
-import { editUser } from "actions/user";
+import EditUserForm from "@/app/components/forms/EditUserForm";
+import { updateUserDataAction } from "actions/userActions";
 
 export default async function AccountInformation() {
   // Check verify a session
   const session = await verifySession();
   if (!session.isAuth) return redirect("/login");
 
-  const user = await findUserById(session.userId);
+  const getUserData = await findUserById(session.userId);
 
   return (
     <Wrapper>
@@ -26,7 +26,10 @@ export default async function AccountInformation() {
         </div>
       </header>
 
-      <EditUser user={user} editUser={editUser} />
+      <EditUserForm
+        userData={getUserData}
+        updateUserDataAction={updateUserDataAction}
+      />
     </Wrapper>
   );
 }
