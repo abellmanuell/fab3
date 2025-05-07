@@ -15,7 +15,7 @@ export default async function Profile(userData: any) {
       <div>
         {userData && !userData.imgSrc ? (
           <div className="max-w-[40px] max-h-[40px] p-6 font-bold flex justify-center items-center rounded-full bg-gray-500">
-            {userData && userData?.nickname[0]}
+            {userData?.nickname ? userData.nickname.charAt(0) : ""}
           </div>
         ) : (
           userData && (

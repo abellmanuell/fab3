@@ -6,7 +6,6 @@ import Wrapper from "@/components/Wrapper";
 import { verifySession } from "@/lib/verifySession";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signUpAuth } from "actions/authActions";
@@ -14,7 +13,7 @@ import { signUpAuth } from "actions/authActions";
 export default async function SignUp() {
   // Redirect if session exist
   const session = await verifySession();
-  if (session.isAuth) redirect("/airdrops");
+  if (!session) return null;
 
   return (
     <Wrapper>

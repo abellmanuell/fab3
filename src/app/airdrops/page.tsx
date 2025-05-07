@@ -5,7 +5,6 @@ import Heading1 from "@/components/Heading1";
 import AirdropCard from "@/components/AirdropCard";
 import AirdropGroup from "@/components/AirdropGroup";
 import AddAirdropButton from "@/components/AddAirdropButton";
-import { redirect } from "next/navigation";
 import { verifySession } from "@/lib/verifySession";
 import { findUserById } from "@/lib/db/userDB";
 import { findAirdrops } from "@/lib/db/airdropDB";
@@ -15,7 +14,7 @@ import LoadingCard from "../components/LoadingCard";
 export default async function Page() {
   // Check verify a session
   const session = await verifySession();
-  if (!session.isAuth) return redirect("/login");
+  if (!session) return null;
 
   const userData = await findUserById(session.userId);
   const airdropList = await findAirdrops(session.userId);

@@ -3,18 +3,19 @@ import LoginForm from "@/components/forms/LoginForm";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { verifySession } from "@/lib/verifySession";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { loginAuth } from "actions/authActions";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Login() {
-  // Redirect if session exist
-  const session = await verifySession();
-  if (session.isAuth) redirect("/airdrops");
+  // Redirect if we have login
+  const cookie = cookies();
+  const isUserLogin = Boolean((await cookie).get("session")?.value);
+  if (isUserLogin) redirect("/airdrops");
 
   return (
     <Wrapper>

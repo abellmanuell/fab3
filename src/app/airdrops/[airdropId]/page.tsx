@@ -5,11 +5,10 @@ import Wrapper from "@/app/components/Wrapper";
 import { findAirdrop } from "@/lib/db/airdropDB";
 import { findUserById } from "@/lib/db/userDB";
 import { verifySession } from "@/lib/verifySession";
-import { redirect } from "next/navigation";
 
 export default async function SingleAirdrop() {
   const session = await verifySession();
-  if (!session.isAuth) return redirect("/login");
+  if (!session) return null;
 
   const userData = await findUserById(session.userId);
 

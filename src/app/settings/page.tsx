@@ -6,13 +6,12 @@ import Link from "next/link";
 import Paragraph from "../components/Paragraph";
 import { User } from "lucide-react";
 import { verifySession } from "@/lib/verifySession";
-import { redirect } from "next/navigation";
 import { logout } from "actions/authActions";
 
 export default async function Settings() {
   // Check verify a session
   const session = await verifySession();
-  if (!session.isAuth) return redirect("/login");
+  if (!session) return null;
 
   return (
     <Wrapper>

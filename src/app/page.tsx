@@ -5,14 +5,15 @@ import React from "react";
 import Wrapper from "@/components/Wrapper";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
-import { verifySession } from "@/lib/verifySession";
+import { cookies } from "next/headers";
 
 export default async function Page() {
   // Redirect if session exist
-  const session = await verifySession();
+  const cookie = cookies();
+  const isUserLogin = Boolean((await cookie).get("session")?.value);
 
   return (
-    <Wrapper className="py-0 h-screen flex flex-col justify-center relative">
+    <Wrapper className="py-0 h-dvh flex flex-col justify-center relative">
       <div className="p-6 flex">
         <Paragraph className="rounded-full py-2 px-4 font-bold text-center text-xs inline-flex space-x-1 justify-center text-primary-1 bg-primary-2 m-auto dark:bg-primary-2/20">
           <Crown size={15} />
@@ -32,10 +33,10 @@ export default async function Page() {
         </Paragraph>
 
         <Link
-          href={session?.isAuth ? "/airdrops" : "/login"}
+          href={isUserLogin ? "/airdrops" : "/login"}
           className="flex bg-primary-1 font-bold justify-center rounded-full w-full p-4 dark:text-black"
         >
-          {session?.isAuth ? "Go Dashboard" : "Farm Smarter Today"}
+          {isUserLogin ? "Go Dashboard" : "Farm Smarter Today"}
         </Link>
       </section>
 

@@ -3,7 +3,6 @@ import BackButton from "@/app/components/BackButton";
 import Heading1 from "@/app/components/Heading1";
 import Wrapper from "@/app/components/Wrapper";
 import { verifySession } from "@/lib/verifySession";
-import { redirect } from "next/navigation";
 import { findUserById } from "@/lib/db/userDB";
 import EditUserForm from "@/app/components/forms/EditUserForm";
 import { updateUserDataAction } from "actions/userActions";
@@ -11,7 +10,7 @@ import { updateUserDataAction } from "actions/userActions";
 export default async function AccountInformation() {
   // Check verify a session
   const session = await verifySession();
-  if (!session.isAuth) return redirect("/login");
+  if (!session) return null;
 
   const getUserData = await findUserById(session.userId);
 

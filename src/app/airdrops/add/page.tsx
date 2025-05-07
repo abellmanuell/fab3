@@ -1,7 +1,6 @@
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { redirect } from "next/navigation";
 import AddAirdropForm from "@/components/forms/AirdropForm";
 import { Crown } from "lucide-react";
 import BackButton from "@/components/BackButton";
@@ -11,7 +10,7 @@ import { addAirdropAction } from "actions/airdropsActions";
 export default async function AddAirdrop() {
   // Check verify a session
   const session = await verifySession();
-  if (!session.isAuth) return redirect("/login");
+  if (!session) return null;
 
   return (
     <Wrapper>
