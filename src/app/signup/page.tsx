@@ -9,11 +9,14 @@ import Link from "next/link";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signUpAuth } from "actions/authActions";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function SignUp() {
-  // Redirect if session exist
-  const session = await verifySession();
-  if (!session) return null;
+  // Redirect if we have login
+  const cookie = cookies();
+  const isUserLogin = Boolean((await cookie).get("session")?.value);
+  if (isUserLogin) redirect("/airdrops");
 
   return (
     <Wrapper>
