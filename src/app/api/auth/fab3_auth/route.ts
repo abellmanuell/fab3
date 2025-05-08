@@ -18,9 +18,9 @@ interface UserDataProps {
 
 export async function GET(req: NextRequest) {
   try {
-    console.log("Receving Request");
     const searchParams = req.nextUrl.searchParams;
     const code = searchParams.get("code") as string;
+    const googleOAuthError = searchParams.get("error") as string;
     const redirectUrl = `${process.env.REDIRECT_URL}/api/auth/fab3_auth`;
 
     console.log(code);
@@ -36,6 +36,12 @@ export async function GET(req: NextRequest) {
     const credentials = oAuth2Client.credentials as any;
 
     const userData = await getUserData(credentials);
+
+    if (googleOAuthError) {
+      return NextResponse.redirect(
+        `${process.env.REDIRECT_URL}/login?success=false&message=${googleOAuthError}!`
+      );
+    }
 
     if (userData?.isAuthSuccess) {
       return NextResponse.redirect(
