@@ -3,11 +3,9 @@ import SignUpForm from "@/components/forms/SignUpForm";
 import Heading1 from "@/components/Heading1";
 import Paragraph from "@/components/Paragraph";
 import Wrapper from "@/components/Wrapper";
-import { verifySession } from "@/lib/verifySession";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FcGoogle } from "react-icons/fc";
 import { signUpAuth } from "actions/authActions";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -34,7 +32,7 @@ export default async function SignUp() {
       </Paragraph>
 
       {/* Google OAuth */}
-      <ButtonOutline icon={FcGoogle}>Google</ButtonOutline>
+      <ButtonOutline>Google</ButtonOutline>
 
       <div className="text-center mt-4 text-sm">
         Already have an account?{" "}
