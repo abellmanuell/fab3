@@ -1,6 +1,8 @@
+"use client";
 import { ButtonProps } from "@/app/models/buttonModel";
 import { cn } from "@/app/utils/cn";
 import React from "react";
+import { FcGoogle } from "react-icons/fc";
 import { ScaleLoader } from "react-spinners";
 
 export default function ButtonOutline({
@@ -11,6 +13,7 @@ export default function ButtonOutline({
 }: ButtonProps) {
   return (
     <button
+      onClick={handleGoogleOAuth}
       disabled={isSubmitting}
       className={cn(
         "flex space-x-4 border border-primary-1 items-center justify-center rounded-full w-full p-4 hover:bg-primary-2/20 dark:hover:bg-black/20 cursor-pointer disabled:opacity-50",
@@ -19,14 +22,21 @@ export default function ButtonOutline({
     >
       {isSubmitting ? (
         <ScaleLoader height={20} width={3} />
+      ) : Icon ? (
+        <span>
+          <Icon />
+        </span>
       ) : (
-        Icon && (
-          <span>
-            <Icon />
-          </span>
-        )
+        <FcGoogle />
       )}
       <span>{children}</span>
     </button>
   );
+}
+
+function handleGoogleOAuth() {
+  // setGoogleOAuthLoading(true);
+
+  window.location.href = "/api/auth/google";
+  // if (authorizedUrl) redirect(authorizedUrl);
 }

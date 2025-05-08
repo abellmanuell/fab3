@@ -3,4 +3,5 @@ export interface ButtonProps {
   className?: string;
   icon?: any;
   isSubmitting?: boolean;
+  // onClick?: any;
 }

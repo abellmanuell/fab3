@@ -65,7 +65,7 @@ export async function signUpAuth(state: FormState, formData: FormData) {
 
   // Create user session
   await createSession(_id);
-  // Redirect user
+  // Redirect user to airdrops
   redirect("/airdrops?success=true&message=Successfully created!");
 }
 

@@ -40,7 +40,7 @@ export default async function Profile(userData: any) {
         )}
 
         {userData.username || userData.email ? (
-          <Paragraph className="text-secondary-2 text-sm">
+          <Paragraph className="text-secondary-2 text-sm max-w-32 overflow-hidden text-ellipsis">
             {(userData && userData.username) ?? userData?.email}
           </Paragraph>
         ) : (
