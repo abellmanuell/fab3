@@ -14,9 +14,14 @@ export async function dbCollection(name: string) {
 /************************
  * CREATE USER
  * **********************/
-export async function createUser(data: object) {
+export async function createUser(data: any) {
   const collection = await dbCollection("users");
-  return await collection.insertOne({ _id: uuidv7(), ...data } as any);
+
+  return await collection.insertOne({
+    _id: uuidv7(),
+    ...data,
+    nickname: data?.nickname ?? "Hunter",
+  } as any);
 }
 
 /************************

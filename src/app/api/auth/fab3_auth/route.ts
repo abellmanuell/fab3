@@ -5,9 +5,9 @@ import {
   updateUser,
 } from "@/lib/db/userDB";
 import { createSession } from "@/lib/session";
-import "dotenv/config";
 import { OAuth2Client } from "google-auth-library";
 import { NextRequest, NextResponse } from "next/server";
+import "dotenv/config";
 
 interface UserDataProps {
   access_token: string;
@@ -17,40 +17,89 @@ interface UserDataProps {
 }
 
 export async function GET(req: NextRequest) {
-  try {
-    const searchParams = req.nextUrl.searchParams;
-    const code = searchParams.get("code") as string;
-    const googleOAuthError = searchParams.get("error") as string;
-    const redirectUrl = `${process.env.REDIRECT_URL}/api/auth/fab3_auth`;
+  const searchParams = req.nextUrl.searchParams;
+  const code = searchParams.get("code");
+  const googleOAuthError = searchParams.get("error");
 
-    console.log(code);
-    const oAuth2Client = new OAuth2Client(
-      process.env.CLIENT_ID,
-      process.env.CLIENT_SECRET,
-      redirectUrl
+  const redirectUrl = `${process.env.REDIRECT_URL}/api/auth/fab3_auth`;
+
+  if (googleOAuthError) {
+    return NextResponse.redirect(
+      `${process.env.REDIRECT_URL}/login?success=false&message=${googleOAuthError}`
     );
+  }
 
-    /* Get credentials */
-    const authResponse = await oAuth2Client.getToken(code);
-    await oAuth2Client.setCredentials(authResponse.tokens);
-    const credentials = oAuth2Client.credentials as any;
+  if (!code) {
+    return NextResponse.redirect(
+      `${process.env.REDIRECT_URL}/login?success=false&message=Missing Google auth code`
+    );
+  }
+
+  const oAuth2Client = new OAuth2Client(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    redirectUrl
+  );
+
+  try {
+    const authResponse = await exchangeCodeWithRetry(oAuth2Client, code);
+    oAuth2Client.setCredentials(authResponse.tokens);
+    const credentials = oAuth2Client.credentials as unknown as UserDataProps;
 
     const userData = await getUserData(credentials);
 
-    if (googleOAuthError) {
+    if (userData?.isAuthSuccess) {
       return NextResponse.redirect(
-        `${process.env.REDIRECT_URL}/login?success=false&message=${googleOAuthError}!`
+        `${process.env.REDIRECT_URL}/airdrops?${new URLSearchParams({
+          success: "true",
+          message: "Successfully signed in",
+        }).toString()}`
       );
     }
 
-    if (userData?.isAuthSuccess) {
-      return NextResponse.redirect(
-        `${process.env.REDIRECT_URL}/airdrops?success=true&message=Successfully created!`
-      );
-    }
-  } catch {
-    console.error("Error with signing on Google");
+    throw new Error("User authentication failed.");
+  } catch (error: any) {
+    console.error("Google OAuth Error:", {
+      message: error.message,
+      code: error.code,
+      response: error.response?.data,
+    });
+
+    return NextResponse.redirect(
+      `${process.env.REDIRECT_URL}/login?success=false&message=Google OAuth failed`
+    );
   }
+}
+
+/***************************************
+ *
+ *   EXCHANGE CODE WITH RETRY
+ *
+ **************************************/
+async function exchangeCodeWithRetry(
+  oAuth2Client: OAuth2Client,
+  code: string,
+  retries = 3,
+  delayMs = 500
+) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await oAuth2Client.getToken(code);
+    } catch (error: any) {
+      const isInvalidGrant = error?.response?.data?.error === "invalid_grant";
+
+      if (attempt === retries || !isInvalidGrant) {
+        throw error; // Final attempt or not retryable
+      }
+
+      console.warn(
+        `Attempt ${attempt} failed with invalid_grant. Retrying in ${delayMs}ms...`
+      );
+      await new Promise((res) => setTimeout(res, delayMs));
+    }
+  }
+
+  throw new Error("Token exchange failed after multiple attempts.");
 }
 
 /***************************************
@@ -68,8 +117,8 @@ async function getUserData({
     `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
   );
 
-  const { sub, email } = await response.json();
-  const existingUser = (await findUser(email)) as any;
+  const { sub: google_id, email } = await response.json();
+  const existingUser = await findUser(email);
 
   const userOAuthCredentials = {
     access_token,
@@ -77,41 +126,31 @@ async function getUserData({
     refresh_token,
     expiry_date,
     email,
-    google_id: sub,
+    google_id,
   };
 
-  const isGoogleIdExist = Object.hasOwn(existingUser, "google_id");
-  /* Check whether user exist */
-  if (existingUser && isGoogleIdExist) {
-    // Create user session
-    await createSession(existingUser._id);
-    return { isAuthSuccess: true };
+  if (existingUser) {
+    const hasGoogleId = "google_id" in existingUser;
+
+    if (hasGoogleId) {
+      await createSession(existingUser._id);
+      return { isAuthSuccess: true };
+    } else {
+      await updateUser(existingUser._id, userOAuthCredentials);
+      await createSession(existingUser._id);
+      return { isAuthSuccess: true };
+    }
   }
 
-  /*************************************************
-   * Updated existing user without google_id
-   * ***********************************************/
-  if (existingUser && !isGoogleIdExist) {
-    await updateUser(existingUser._id, userOAuthCredentials);
-    // Create user session
-    await createSession(existingUser._id);
-
-    return { isAuthSuccess: true };
-  }
-
-  /**********************
-   *  CREATE A USER
-   * *********************/
   const userCreated = await createUser(userOAuthCredentials);
 
-  if (userCreated.acknowledged) {
-    const existingUser =
-      userCreated.insertedId &&
-      ((await findUserById(userCreated.insertedId)) as any);
-
-    // Create user session
-    await createSession(existingUser._id);
-
-    return { isAuthSuccess: true };
+  if (userCreated.acknowledged && userCreated.insertedId) {
+    const newUser = await findUserById(userCreated.insertedId);
+    if (newUser) {
+      await createSession(newUser._id);
+      return { isAuthSuccess: true };
+    }
   }
+
+  return { isAuthSuccess: false };
 }
