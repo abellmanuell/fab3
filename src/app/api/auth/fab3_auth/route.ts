@@ -25,13 +25,19 @@ export async function GET(req: NextRequest) {
 
   if (googleOAuthError) {
     return NextResponse.redirect(
-      `${process.env.REDIRECT_URL}/login?success=false&message=${googleOAuthError}`
+      `${process.env.REDIRECT_URL}/login?${new URLSearchParams({
+        success: "false",
+        message: googleOAuthError,
+      })}`
     );
   }
 
   if (!code) {
     return NextResponse.redirect(
-      `${process.env.REDIRECT_URL}/login?success=false&message=Missing Google auth code`
+      `${process.env.REDIRECT_URL}/login?${new URLSearchParams({
+        success: "false",
+        message: "Missing Google auth code",
+      })}`
     );
   }
 
@@ -66,7 +72,10 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.redirect(
-      `${process.env.REDIRECT_URL}/login?success=false&message=Google OAuth failed`
+      `${process.env.REDIRECT_URL}/login?${new URLSearchParams({
+        success: "false",
+        message: "Google OAuth failed",
+      }).toString()}`
     );
   }
 }

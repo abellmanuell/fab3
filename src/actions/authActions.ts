@@ -66,7 +66,12 @@ export async function signUpAuth(state: FormState, formData: FormData) {
   // Create user session
   await createSession(_id);
   // Redirect user to airdrops
-  redirect("/airdrops?success=true&message=Successfully created!");
+  redirect(
+    `/airdrops?${new URLSearchParams({
+      success: "true",
+      message: "Successfully created!",
+    })}`
+  );
 }
 
 /************************************************
@@ -111,10 +116,20 @@ export async function loginAuth(state: FormState, formData: FormData) {
   await createSession(userData?._id);
 
   // Redirect
-  redirect("/airdrops?success=true&message=Successfully login!");
+  redirect(
+    `/airdrops?${new URLSearchParams({
+      success: "true",
+      message: "Successfully login!",
+    })}`
+  );
 }
 
 export async function logout() {
   deleteSession();
-  redirect("/login?success=false&message=You are logged out");
+  redirect(
+    `/login?${new URLSearchParams({
+      success: "false",
+      message: "You are logged out",
+    })}`
+  );
 }
